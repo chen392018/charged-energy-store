@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-100: #e7ccf1;
+  --primary-200: #ce99e3;
+  --primary-300: #b666d6;
+  --primary-400: #9d33c8;
+  --primary-500: #8500ba;
+  --primary-600: #6a0095;
+  --primary-700: #500070;
+  --primary-800: #35004a;
+  --primary-900: #1b002a;
+
+  --secondary-100: #dff2fb;
+  --secondary-200: #bfe5f7;
+  --secondary-300: #9ed9f4;
+  --secondary-400: #7eccf0;
+  --secondary-500: #5ebfec;
+  --secondary-600: #4b99bd;
+  --secondary-700: #38738e;
+  --secondary-800: #264c5e;
+  --secondary-900: #13262f;
+
+  --accent-100: #e3e6e7;
+  --accent-200: #c8cdd0;
+  --accent-300: #acb3b8;
+  --accent-400: #919aa1;
+  --accent-500: #758189;
+  --accent-600: #5e676e;
+  --accent-700: #464d52;
+  --accent-800: #2f3437;
+  --accent-900: #171a1b;
+
+  --background-100: #f8f8f8;
+  --background-200: #f1f1f1;
+  --background-300: #ebebeb;
+  --background-400: #e4e4e4;
+  --background-500: #dddddd;
+  --background-600: #b1b1b1;
+  --background-700: #858585;
+  --background-800: #585858;
+  --background-900: #2c2c2c;
+}
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+} */
+
+body {
+  color: rgb(var(--text-500));
+  background: rgb(var(--background-500));
+}
