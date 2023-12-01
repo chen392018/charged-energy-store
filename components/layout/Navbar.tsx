@@ -6,7 +6,7 @@ import logo from "@/public/logo.svg"
 
 export default function Navbar() {
   return (
-    <nav className="bg-background-500">
+    <nav className="bg-background-300">
       <div className="flex justify-between items-center px-8 py-4 max-w-[1440px] mx-auto">
         <div className="flex items-center gap-2">
           <Image src={logo} alt="Charged Energy" width={32} height={32} />

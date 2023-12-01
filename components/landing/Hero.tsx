@@ -19,7 +19,7 @@ export default function HeroSection() {
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <a
-              href="#"
+              href="/products"
               className="flex items-center rounded-md bg-primary-500 px-3.5 py-2.5 text-sm font-semibold text-accent-100 shadow-sm hover:bg-primary-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 divide-x"
             >
               <span className='pr-2'>Shop Products</span>
