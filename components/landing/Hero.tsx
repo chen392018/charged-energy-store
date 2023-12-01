@@ -20,15 +20,10 @@ export default function HeroSection() {
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <a
               href="#"
-              className="rounded-md bg-primary-500 px-3.5 py-2.5 text-sm font-semibold text-accent-100 shadow-sm hover:bg-primary-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="flex items-center rounded-md bg-primary-500 px-3.5 py-2.5 text-sm font-semibold text-accent-100 shadow-sm hover:bg-primary-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 divide-x"
             >
-              Shop Products
-            </a>
-            <a
-              href="#"
-              className="text-sm font-semibold leading-6 text-primary-900"
-            >
-              Learn more <span aria-hidden="true">→</span>
+              <span className='pr-2'>Shop Products</span>
+              <span className='pl-2 text-center'>&rarr;</span>
             </a>
           </div>
         </div>
