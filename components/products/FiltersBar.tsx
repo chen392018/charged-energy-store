@@ -5,7 +5,7 @@ import {ChevronDownIcon} from '@heroicons/react/24/solid'
 
 export default function FiltersBar () {
 
-    const [extended, setExtended] = useState<boolean>(true)
+    const [extended, setExtended] = useState<boolean>(false)
 
     const handleClick = () => {
         setExtended(!extended)
@@ -20,7 +20,7 @@ export default function FiltersBar () {
             <div className="w-fit rounded-lg">
 
                 <div className={`flex items-center justify-between bg-accent-200 p-2 transition-all ${extended ? 'rounded-t-lg': 'rounded-lg'}`}>
-                    <h3 className="font-semibold text-gray-900">Technology</h3>
+                    <h3 className="font-semibold text-gray-900">Availability</h3>
                     <ChevronDownIcon className={`h-4 w-4 ${extended ? 'rotate-180' : ''} transition-transform cursor-pointer`} onClick={handleClick} />
                 </div>
 
