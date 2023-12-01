@@ -13,7 +13,7 @@ const nextConfig = {
         hostname: "cdn.shopify.com",
         port: "",
         pathname: "/**",
-      }
+      },
     ],
   },
 }
