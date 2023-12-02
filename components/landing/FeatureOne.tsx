@@ -19,12 +19,12 @@ export default function FeatureSection({
 
       <div className="w-full flex items-center justify-evenly flex-1">
         <div className="prose py-16 md:py-24 px-12">
-          <h2 className="uppercase font-normal tracking-tight text-lg">
+          <h2 className="uppercase font-normal tracking-tight text-lg text-accent-700">
             Charge Energy
           </h2>
           <h2 className="text-4xl">{productData[handle].title}</h2>
           <p>{productData[handle].description}</p>
-          <a className="prose rounded p-2 border border-accent-300 cursor-pointer">
+          <a className="prose rounded py-2 px-4 bg-secondary-500 hover:bg-secondary-300 cursor-pointer">
             Shop Now
           </a>
         </div>

@@ -7,7 +7,7 @@ import logo from "@/public/charge-logo.png"
 
 export default function Navbar() {
   return (
-    <nav className="bg-primary-600">
+    <nav className="bg-primary-700">
       <div className="flex justify-between items-center px-8 py-4 max-w-[1440px] mx-auto">
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center gap-2 z-[100]">
