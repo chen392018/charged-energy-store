@@ -1,75 +1,65 @@
-import Image from "next/image"
-import {
-  CloudArrowUpIcon,
-  LockClosedIcon,
-  ServerIcon,
-} from "@heroicons/react/20/solid"
-
-const features = [
-  {
-    name: "Push to deploy.",
-    description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
-    icon: CloudArrowUpIcon,
-  },
-  {
-    name: "SSL certificates.",
-    description:
-      "Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo.",
-    icon: LockClosedIcon,
-  },
-  {
-    name: "Database backups.",
-    description:
-      "Ac tincidunt sapien vehicula erat auctor pellentesque rhoncus. Et magna sit morbi lobortis.",
-    icon: ServerIcon,
-  },
-]
-
-export default function FeatureOne() {
+export default function FeatureSection({
+  handle,
+  reversed,
+}: {
+  handle: string
+  reversed: boolean
+}) {
   return (
-    <div className="overflow-hidden py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
-          <div className="lg:pr-8 lg:pt-4">
-            <div className="lg:max-w-lg">
-              <h2 className="text-base font-semibold leading-7 text-primary-600">
-                Deploy faster
-              </h2>
-              <p className="mt-2 text-3xl font-bold tracking-tight text-accent-900 sm:text-4xl">
-                A better workflow
-              </p>
-              <p className="mt-6 text-lg leading-8 text-accent-600">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Maiores impedit perferendis suscipit eaque, iste dolor
-                cupiditate blanditiis ratione.
-              </p>
-              <dl className="mt-10 max-w-xl space-y-8 text-base leading-7 text-accent-600 lg:max-w-none">
-                {features.map((feature) => (
-                  <div key={feature.name} className="relative pl-9">
-                    <dt className="inline font-semibold text-accent-900">
-                      <feature.icon
-                        className="absolute left-1 top-1 h-5 w-5 text-primary-600"
-                        aria-hidden="true"
-                      />
-                      {feature.name}
-                    </dt>{" "}
-                    <dd className="inline">{feature.description}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-          </div>
+    <div
+      className={`p-4 w-full md:flex ${
+        reversed && "md:flex-row-reverse"
+      } my-[16rem]`}
+    >
+      <div className="flex w-full border border-accent-900 flex-1 bg-primary-600 py-24 md:py-32 items-center justify-center">
+        <h1 className="prose w-fit mx-auto text-[2rem] md:text-[3rem] lg:text-[4rem] uppercase font-normal m-0 px-1 text-accent-300 border border-accent-300 leading-none">
+          Coming Soon
+        </h1>
+      </div>
 
-          <Image
-            src="https://tailwindui.com/img/component-images/dark-project-app-screenshot.png"
-            alt="Product screenshot"
-            className="max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
-            width={2432}
-            height={1442}
-          />
+      <div className="w-full flex items-center justify-evenly flex-1">
+        <div className="prose py-16 md:py-24 px-12">
+          <h2 className="uppercase font-normal tracking-tight text-lg">
+            Charge Energy
+          </h2>
+          <h2 className="text-4xl">{productData[handle].title}</h2>
+          <p>{productData[handle].description}</p>
+          <a className="prose rounded p-2 border border-accent-300 cursor-pointer">
+            Shop Now
+          </a>
         </div>
       </div>
     </div>
   )
+}
+
+const productData: {
+  [key: string]: {
+    title: string
+    description: string
+    image: string
+    link: string
+  }
+} = {
+  dawn: {
+    title: "Dawn",
+    description:
+      "An energy drink formulated to kick-start your day with a burst of energy. It contains a blend of caffeine, witamings and other ingredients to boost alertness and improve focus.",
+    image: "/dawn.png",
+    link: "/products/dawn",
+  },
+  noon: {
+    title: "Noon",
+    description:
+      "Noon, an afternoon energy drink designed to combat the midday slump, offering a revitilising mix of ingredients like caffeiene and B-vitamins to restore energy and concentration.",
+    image: "/noon.png",
+    link: "/products/noon",
+  },
+  dusk: {
+    title: "Dusk",
+    description:
+      "Dusk, an evening energy drink, is tailored to provide a gentle energy lift without disrupting sleep patterns, often containing lower caffiene levels and calming ingredients.",
+    image: "/dusk.png",
+    link: "/products/dusk",
+  },
 }

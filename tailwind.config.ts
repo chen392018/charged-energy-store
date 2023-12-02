@@ -36,23 +36,61 @@ const config: Config = {
         "accent-700": "var(--accent-700)",
         "accent-800": "var(--accent-800)",
         "accent-900": "var(--accent-900)",
-        "background-100": "var(--background-100)",
-        "background-200": "var(--background-200)",
-        "background-300": "var(--background-300)",
-        "background-400": "var(--background-400)",
-        "background-500": "var(--background-500)",
-        "background-600": "var(--background-600)",
-        "background-700": "var(--background-700)",
-        "background-800": "var(--background-800)",
-        "background-900": "var(--background-900)",
+        "success-100": "var(--success-100)",
+        "success-200": "var(--success-200)",
+        "success-300": "var(--success-300)",
+        "success-400": "var(--success-400)",
+        "success-500": "var(--success-500)",
+        "success-600": "var(--success-600)",
+        "success-700": "var(--success-700)",
+        "success-800": "var(--success-800)",
+        "success-900": "var(--success-900)",
+        "warning-100": "var(--warning-100)",
+        "warning-200": "var(--warning-200)",
+        "warning-300": "var(--warning-300)",
+        "warning-400": "var(--warning-400)",
+        "warning-500": "var(--warning-500)",
+        "warning-600": "var(--warning-600)",
+        "warning-700": "var(--warning-700)",
+        "warning-800": "var(--warning-800)",
+        "warning-900": "var(--warning-900)",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      typography: (theme: any) => ({
+        DEFAULT: {
+          css: {
+            h1: {
+              color: "var(--accent-300)",
+              letterSpacing: "0.05em",
+            },
+            h2: {
+              color: "var(--accent-300)",
+              letterSpacing: "0.05em",
+            },
+
+            p: {
+              color: "var(--accent-400)",
+            },
+            a: {
+              "text-decoration": "none",
+              color: "var(--accent-400)",
+              "&:hover": {
+                color: "var(--secondary-200)",
+                "border-color": "var(--secondary-200)",
+              },
+            },
+          },
+        },
+      }),
     },
   },
-  plugins: [require("@tailwindcss/aspect-ratio")],
+  plugins: [
+    require("@tailwindcss/aspect-ratio"),
+    require("@tailwindcss/typography"),
+  ],
 }
 export default config
