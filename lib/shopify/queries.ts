@@ -1,7 +1,6 @@
 import {
   detailedProductFragment,
   basicProductFragment,
-  costFragment,
   cartFragment,
 } from "./fragments"
 
