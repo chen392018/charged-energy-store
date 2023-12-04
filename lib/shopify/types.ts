@@ -55,6 +55,7 @@ export interface DetailedProduct extends BasicProduct {
 export type CartCostFragment = {
   totalAmount: {
     amount: string
+    currencyCode: string
   }
 }
 
@@ -73,6 +74,11 @@ export type LineItemFragment = {
   }
 }
 
+export type CartCost = {
+  amount: number
+  currencyCode: string
+}
+
 export type LineItem = {
   id: string
   quantity: number
@@ -85,6 +91,6 @@ export type LineItem = {
 export type Cart = {
   id: string
   checkoutUrl: string
-  cost: number
+  cost: CartCost
   lines: LineItem[]
 }

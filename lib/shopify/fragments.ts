@@ -46,6 +46,7 @@ export const costFragment = gql`
   fragment cost on CartCost {
     totalAmount {
       amount
+      currencyCode
     }
   }
 `

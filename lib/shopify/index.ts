@@ -1,5 +1,5 @@
 import { getProducts, getProductByHandle, getCartByID } from "./queries"
-import { createCart, addToCart } from "./mutations"
+import { createCart, addToCart, removeFromCart } from "./mutations"
 import {
   basicProductFragmentParser,
   detailedProductFragmentParser,
@@ -13,6 +13,7 @@ export const storefront = async (
 ): Promise<any> => {
   const url = process.env.NEXT_PUBLIC_STOREFRONT_API_URL || ""
   const apiKey = process.env.NEXT_PUBLIC_STOREFRONT_API_TOKEN || ""
+  console.log(variables)
   try {
     const response = await fetch(url, {
       method: "POST",
@@ -22,6 +23,7 @@ export const storefront = async (
       },
       body: JSON.stringify({ query, variables }),
     })
+    console.log(response.status)
     return response.json()
   } catch (error) {
     console.error(error)
@@ -29,7 +31,7 @@ export const storefront = async (
 }
 
 export { getProducts, getProductByHandle, getCartByID }
-export { createCart, addToCart }
+export { createCart, addToCart, removeFromCart }
 export {
   basicProductFragmentParser,
   detailedProductFragmentParser,

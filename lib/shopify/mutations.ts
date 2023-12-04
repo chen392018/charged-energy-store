@@ -27,3 +27,30 @@ export const addToCart = gql`
 
   ${cartFragment}
 `
+
+export const removeFromCart = gql`
+  mutation removeFromCart($cartId: ID!, $lineId: ID!) {
+    cartLinesRemove(cartId: $cartId, lineIds: [$lineId]) {
+      cart {
+        ...cart
+      }
+    }
+  }
+
+  ${cartFragment}
+`
+
+export const updateCartItem = gql`
+  mutation updateCartItem($cartId: ID!, $lineId: ID!, $quantity: Int!) {
+    cartLinesUpdate(
+      cartId: $cartId
+      lines: [{ id: $lineId, quantity: $quantity }]
+    ) {
+      cart {
+        ...cart
+      }
+    }
+  }
+
+  ${cartFragment}
+`

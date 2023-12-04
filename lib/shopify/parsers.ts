@@ -5,6 +5,7 @@ import type {
   CartCostFragment,
   LineItemFragment,
   DetailedProduct,
+  CartCost,
 } from "./types"
 
 export const basicProductFragmentParser = (
@@ -31,8 +32,10 @@ export const detailedProductFragmentParser = (
   })),
 })
 
-export const cartCostFragmentParser = (cost: CartCostFragment): number =>
-  parseFloat(cost.totalAmount.amount)
+export const cartCostFragmentParser = (cost: CartCostFragment): CartCost => ({
+  amount: parseFloat(cost.totalAmount.amount),
+  currencyCode: cost.totalAmount.currencyCode,
+})
 
 type LineItemFragmentNode = {
   node: LineItemFragment

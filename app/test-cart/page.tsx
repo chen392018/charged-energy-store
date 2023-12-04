@@ -1,4 +1,6 @@
 "use client"
+import { XCircleIcon, PlusIcon, MinusIcon } from "@heroicons/react/24/outline"
+
 import { useState, useEffect, useRef } from "react"
 import {
   storefront,
@@ -7,9 +9,11 @@ import {
   cartCostFragmentParser,
   lineItemFragmentParser,
   addToCart,
+  removeFromCart,
 } from "@/lib/shopify"
 
 import type { Cart } from "@/lib/shopify/types"
+import { updateCartItem } from "@/lib/shopify/mutations"
 
 const gql = String.raw
 
@@ -144,6 +148,42 @@ export default function TestCart() {
     await handleCreateCart()
   }
 
+  const handleRemoveItem = async (lineID: string) => {
+    // Ensure that the cart exists before trying to remove an item
+    if (!cart) return
+
+    const { data } = await storefront(removeFromCart, {
+      cartId: cart?.id,
+      lineId: lineID,
+    })
+    setCart({
+      ...cart,
+      cost: cartCostFragmentParser(data.cartLinesRemove.cart.cost),
+      lines: lineItemFragmentParser(data.cartLinesRemove.cart.lines.edges),
+    })
+  }
+
+  const handleUpdateItem = async (lineID: string, quantity: number) => {
+    // Ensure that the cart exists before trying to update an item
+    if (!cart) return
+
+    const { data, errors } = await storefront(updateCartItem, {
+      cartId: cart?.id,
+      lineId: lineID,
+      quantity: quantity,
+    })
+    if (errors) {
+      console.error(errors)
+      return
+    }
+    console.log(data)
+    setCart({
+      ...cart,
+      cost: cartCostFragmentParser(data.cartLinesUpdate.cart.cost),
+      lines: lineItemFragmentParser(data.cartLinesUpdate.cart.lines.edges),
+    })
+  }
+
   return (
     <div className="text-accent-300 flex flex-col mx-auto items-center gap-8">
       <h1 className="text-3xl">Test Cart Page</h1>
@@ -157,21 +197,21 @@ export default function TestCart() {
       </div>
       <div className="flex gap-16 items-center">
         <button
-          className="p-2 bg-secondary-300 rounded border"
-          onClick={handleAddToCart}
-        >
-          Add Item
-        </button>
-        <button
-          className="p-2 bg-secondary-300 rounded border"
+          className="p-2 text-accent-300 rounded border border-accent-300"
           onClick={handleEmptyCart}
         >
           Empty Cart
         </button>
+        <button
+          className="p-2 bg-secondary-300 text-primary-700 rounded border"
+          onClick={handleAddToCart}
+        >
+          Add Item
+        </button>
         <select
           value={selectedVariantID}
           onChange={(e) => setSelectedVariantID(e.target.value)}
-          className="text-primary-700"
+          className="text-primary-700 bg-secondary-300"
         >
           <option value="">Select a variant</option>
           {variants.map((variant) => (
@@ -197,10 +237,24 @@ export default function TestCart() {
             <p>
               ${line.price * line.quantity} {line.currencyCode}
             </p>
+            <XCircleIcon
+              className="w-4 h-4 text-red-500 cursor-pointer"
+              onClick={() => handleRemoveItem(line.id)}
+            />
+            <PlusIcon
+              className="w-4 h-4 text-green-500 cursor-pointer"
+              onClick={() => handleUpdateItem(line.id, line.quantity + 1)}
+            />
+            <MinusIcon
+              className="w-4 h-4 text-green-500 cursor-pointer"
+              onClick={() => handleUpdateItem(line.id, line.quantity - 1)}
+            />
           </div>
         ))}
       </div>
-      <p>Total Cost: ${cart?.cost} USD</p>
+      <p>
+        Total Cost: ${cart?.cost.amount} {cart?.cost.currencyCode}
+      </p>
     </div>
   )
 }
