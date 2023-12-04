@@ -1,3 +1,9 @@
+import {
+  productDetailFragment,
+  lineItemFragment,
+  costFragment,
+} from "./fragments"
+
 const gql = String.raw
 
 export const getProducts = gql`
@@ -5,47 +11,42 @@ export const getProducts = gql`
     products(first: 3) {
       edges {
         node {
-          title
-          handle
-          description
-          tags
-          priceRange {
-            minVariantPrice {
-              amount
-            }
-          }
-          images(first: 1) {
-            edges {
-              node {
-                transformedSrc
-                altText
-              }
-            }
-          }
+          ...productDetail
         }
       }
     }
   }
+
+  ${productDetailFragment}
 `
 
 export const getProductByHandle = gql`
-  query product($handle: String!) {
-    productByHandle(handle: $handle) {
-      title
-      description
-      tags
-      priceRange {
-        minVariantPrice {
-          amount
-        }
+  query detailProduct($handle: String!) {
+    product(handle: $handle) {
+      ...productDetail
+    }
+  }
+
+  ${productDetailFragment}
+`
+
+export const getCartByID = gql`
+  query Cart($cartId: ID!) {
+    cart(id: $cartId) {
+      checkoutUrl
+      cost {
+        ...cost
       }
-      images(first: 1) {
+      lines(first: 100) {
         edges {
           node {
-            transformedSrc
+            ...lineItem
           }
         }
       }
     }
   }
+
+  ${costFragment}
+  ${lineItemFragment}
 `

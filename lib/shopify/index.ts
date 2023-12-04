@@ -1,4 +1,10 @@
-import { getProducts, getProductByHandle } from "./queries"
+import { getProducts, getProductByHandle, getCartByID } from "./queries"
+import { createCart, addToCart } from "./mutations"
+import {
+  productFragmentParser,
+  lineItemFragmentParser,
+  cartCostFragmentParser,
+} from "./parsers"
 
 export const storefront = async (
   query: string,
@@ -6,7 +12,6 @@ export const storefront = async (
 ): Promise<any> => {
   const url = process.env.NEXT_PUBLIC_STOREFRONT_API_URL || ""
   const apiKey = process.env.NEXT_PUBLIC_STOREFRONT_API_TOKEN || ""
-
   try {
     const response = await fetch(url, {
       method: "POST",
@@ -22,4 +27,6 @@ export const storefront = async (
   }
 }
 
-export { getProducts, getProductByHandle }
+export { getProducts, getProductByHandle, getCartByID }
+export { createCart, addToCart }
+export { productFragmentParser, lineItemFragmentParser, cartCostFragmentParser }

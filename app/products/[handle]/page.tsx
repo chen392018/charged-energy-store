@@ -1,10 +1,12 @@
 import Image from "next/image"
 import { Suspense } from "react"
 
-import ProductCatalog from "@/components/products/Catalog"
-
-import { storefront, getProductByHandle } from "@/lib/shopify"
-import type { ParsedProduct } from "@/lib/shopify/types"
+import {
+  storefront,
+  getProductByHandle,
+  productFragmentParser,
+} from "@/lib/shopify"
+import type { Product } from "@/lib/shopify/types"
 
 export default function ProductPage({
   params: { handle },
@@ -28,18 +30,10 @@ export default function ProductPage({
   )
 }
 
-const fetchProduct = async (handle: string): Promise<ParsedProduct> => {
+const fetchProduct = async (handle: string): Promise<Product> => {
   const { data } = await storefront(getProductByHandle, { handle })
-  return {
-    title: data.productByHandle.title,
-    handle: data.productByHandle.handle,
-    description: data.productByHandle.description,
-    tags: data.productByHandle.tags,
-    price: data.productByHandle.priceRange.minVariantPrice.amount,
-    imageSrc: data.productByHandle.images.edges[0].node.transformedSrc,
-    imageAlt: data.productByHandle.images.edges[0].node.altText,
-    href: `/products/${data.productByHandle.handle}`,
-  }
+  const product = productFragmentParser(data.product)
+  return product
 }
 
 async function ProductDescription({ handle }: { handle: string }) {
@@ -63,7 +57,7 @@ async function ProductImage({ handle }: { handle: string }) {
   return (
     <Image
       src={product.imageSrc}
-      alt={product.imageAlt}
+      alt={product.altText}
       width={250}
       height={250}
       className="mx-auto"

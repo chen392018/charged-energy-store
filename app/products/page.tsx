@@ -3,9 +3,13 @@ import { Suspense } from "react"
 import ProductCatalog from "@/components/products/Catalog"
 import FiltersBar from "@/components/products/FiltersBar"
 
-import { storefront, getProducts as getProductsQuery } from "@/lib/shopify"
+import {
+  storefront,
+  getProducts as getProductsQuery,
+  productFragmentParser,
+} from "@/lib/shopify"
 
-import type { ParsedProduct } from "@/lib/shopify/types"
+import type { Product } from "@/lib/shopify/types"
 
 export default function ProductsPage() {
   return (
@@ -29,18 +33,9 @@ export default function ProductsPage() {
 
 async function ProductCatalogWrapper() {
   const { data } = await storefront(getProductsQuery)
-  const products: ParsedProduct[] = data.products.edges.map(
+  const products: Product[] = data.products.edges.map(
     ({ node }: { node: any }) => {
-      return {
-        title: node.title,
-        handle: node.handle,
-        description: node.description,
-        tags: node.tags,
-        price: node.priceRange.minVariantPrice.amount,
-        imageSrc: node.images.edges[0].node.transformedSrc,
-        imageAlt: node.images.edges[0].node.altText,
-        href: `/products/${node.handle}`,
-      }
+      return productFragmentParser(node)
     },
   )
 
