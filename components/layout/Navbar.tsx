@@ -7,7 +7,7 @@ import logo from "@/public/charge-logo.png"
 
 export default function Navbar() {
   return (
-    <nav className="bg-primary-700">
+    <nav className="bg-primary-700 navbar-shadow-bottom relative top-0 right-0 left-0 z-[1000]">
       <div className="flex justify-between items-center px-8 py-4 max-w-[1440px] mx-auto">
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center gap-2 z-[100]">
@@ -31,9 +31,9 @@ export default function Navbar() {
         </div>
 
         <div>
-          <button className="p-2 border border-accent-900 rounded">
-            <ShoppingCartIcon className="w-6 h-6 text-accent-900 hover:text-primary-300" />
-          </button>
+          {/* <button className="p-2 border border-accent-600 rounded cart-icon"> */}
+          <ShoppingCartIcon className="w-10 h-10 border border-accent-600 rounded p-2 text-accent-300 glow-sm hover:text-secondary-200 hover:border-secondary-200" />
+          {/* </button> */}
         </div>
       </div>
     </nav>

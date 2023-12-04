@@ -7,10 +7,7 @@ import { storefront, getProductByHandle } from "@/lib/shopify/"
 export default async function Home() {
   return (
     <>
-      <section
-        className="relative isolate px-6 lg:px-8 min-h-screen w-full"
-        style={{ backgroundImage: `url(/hero-background-temp.png)` }}
-      >
+      <section className="relative isolate px-6 lg:px-8 min-h-screen w-full hero-image">
         <HeroSection />
       </section>
       <section className="py-12 sm:py-24">
