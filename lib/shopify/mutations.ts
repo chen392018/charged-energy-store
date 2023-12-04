@@ -1,4 +1,4 @@
-import { lineItemFragment, costFragment } from "./fragments"
+import { cartFragment } from "./fragments"
 
 const gql = String.raw
 
@@ -20,20 +20,10 @@ export const addToCart = gql`
       lines: [{ quantity: 1, merchandiseId: $variantId }]
     ) {
       cart {
-        cost {
-          ...cost
-        }
-        lines(first: 100) {
-          edges {
-            node {
-              ...lineItem
-            }
-          }
-        }
+        ...cart
       }
     }
   }
 
-  ${lineItemFragment}
-  ${costFragment}
+  ${cartFragment}
 `

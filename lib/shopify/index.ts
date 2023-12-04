@@ -1,7 +1,8 @@
 import { getProducts, getProductByHandle, getCartByID } from "./queries"
 import { createCart, addToCart } from "./mutations"
 import {
-  productFragmentParser,
+  basicProductFragmentParser,
+  detailedProductFragmentParser,
   lineItemFragmentParser,
   cartCostFragmentParser,
 } from "./parsers"
@@ -29,4 +30,9 @@ export const storefront = async (
 
 export { getProducts, getProductByHandle, getCartByID }
 export { createCart, addToCart }
-export { productFragmentParser, lineItemFragmentParser, cartCostFragmentParser }
+export {
+  basicProductFragmentParser,
+  detailedProductFragmentParser,
+  lineItemFragmentParser,
+  cartCostFragmentParser,
+}

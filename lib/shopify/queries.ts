@@ -1,7 +1,8 @@
 import {
-  productDetailFragment,
-  lineItemFragment,
+  detailedProductFragment,
+  basicProductFragment,
   costFragment,
+  cartFragment,
 } from "./fragments"
 
 const gql = String.raw
@@ -11,42 +12,31 @@ export const getProducts = gql`
     products(first: 3) {
       edges {
         node {
-          ...productDetail
+          ...basicProductDetails
         }
       }
     }
   }
 
-  ${productDetailFragment}
+  ${basicProductFragment}
 `
 
 export const getProductByHandle = gql`
   query detailProduct($handle: String!) {
     product(handle: $handle) {
-      ...productDetail
+      ...detailedProductDetails
     }
   }
 
-  ${productDetailFragment}
+  ${detailedProductFragment}
 `
 
 export const getCartByID = gql`
   query Cart($cartId: ID!) {
     cart(id: $cartId) {
-      checkoutUrl
-      cost {
-        ...cost
-      }
-      lines(first: 100) {
-        edges {
-          node {
-            ...lineItem
-          }
-        }
-      }
+      ...cart
     }
   }
 
-  ${costFragment}
-  ${lineItemFragment}
+  ${cartFragment}
 `

@@ -1,12 +1,11 @@
 const gql = String.raw
 
-export const productDetailFragment = gql`
-  fragment productDetail on Product {
+export const basicProductFragment = gql`
+  fragment basicProductDetails on Product {
     id
     title
     handle
     description
-    tags
     priceRange {
       minVariantPrice {
         amount
@@ -21,6 +20,26 @@ export const productDetailFragment = gql`
       }
     }
   }
+`
+
+export const detailedProductFragment = gql`
+  fragment detailedProductDetails on Product {
+    ...basicProductDetails
+    variants(first: 3) {
+      edges {
+        node {
+          id
+          title
+          price {
+            amount
+            currencyCode
+          }
+        }
+      }
+    }
+  }
+
+  ${basicProductFragment}
 `
 
 export const costFragment = gql`
@@ -48,4 +67,23 @@ export const lineItemFragment = gql`
       }
     }
   }
+`
+
+export const cartFragment = gql`
+  fragment cart on Cart {
+    checkoutUrl
+    cost {
+      ...cost
+    }
+    lines(first: 100) {
+      edges {
+        node {
+          ...lineItem
+        }
+      }
+    }
+  }
+
+  ${costFragment}
+  ${lineItemFragment}
 `

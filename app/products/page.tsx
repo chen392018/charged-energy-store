@@ -6,10 +6,10 @@ import FiltersBar from "@/components/products/FiltersBar"
 import {
   storefront,
   getProducts as getProductsQuery,
-  productFragmentParser,
+  basicProductFragmentParser,
 } from "@/lib/shopify"
 
-import type { Product } from "@/lib/shopify/types"
+import type { BasicProduct } from "@/lib/shopify/types"
 
 export default function ProductsPage() {
   return (
@@ -33,9 +33,10 @@ export default function ProductsPage() {
 
 async function ProductCatalogWrapper() {
   const { data } = await storefront(getProductsQuery)
-  const products: Product[] = data.products.edges.map(
+  console.log(data.products.edges)
+  const products: BasicProduct[] = data.products.edges.map(
     ({ node }: { node: any }) => {
-      return productFragmentParser(node)
+      return basicProductFragmentParser(node)
     },
   )
 

@@ -4,9 +4,9 @@ import { Suspense } from "react"
 import {
   storefront,
   getProductByHandle,
-  productFragmentParser,
+  detailedProductFragmentParser,
 } from "@/lib/shopify"
-import type { Product } from "@/lib/shopify/types"
+import type { BasicProduct, DetailedProduct } from "@/lib/shopify/types"
 
 export default function ProductPage({
   params: { handle },
@@ -30,9 +30,9 @@ export default function ProductPage({
   )
 }
 
-const fetchProduct = async (handle: string): Promise<Product> => {
+const fetchProduct = async (handle: string): Promise<BasicProduct> => {
   const { data } = await storefront(getProductByHandle, { handle })
-  const product = productFragmentParser(data.product)
+  const product: DetailedProduct = detailedProductFragmentParser(data.product)
   return product
 }
 

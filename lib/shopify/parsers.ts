@@ -1,13 +1,15 @@
 import type {
-  ProductDetailFragment,
-  Product,
+  DetailedProductFragment,
+  BasicProductFragment,
+  BasicProduct,
   CartCostFragment,
   LineItemFragment,
+  DetailedProduct,
 } from "./types"
 
-export const productFragmentParser = (
-  product: ProductDetailFragment,
-): Product => ({
+export const basicProductFragmentParser = (
+  product: BasicProductFragment | DetailedProductFragment,
+): BasicProduct => ({
   id: product.id,
   title: product.title,
   handle: product.handle,
@@ -15,6 +17,18 @@ export const productFragmentParser = (
   price: parseFloat(product.priceRange.minVariantPrice.amount),
   imageSrc: product.images.edges[0].node.url,
   altText: product.images.edges[0].node.altText,
+})
+
+export const detailedProductFragmentParser = (
+  product: DetailedProductFragment,
+): DetailedProduct => ({
+  ...basicProductFragmentParser(product),
+  variants: product.variants.edges.map((variant) => ({
+    id: variant.node.id,
+    title: variant.node.title,
+    price: parseFloat(variant.node.price.amount),
+    currencyCode: variant.node.price.currencyCode,
+  })),
 })
 
 export const cartCostFragmentParser = (cost: CartCostFragment): number =>

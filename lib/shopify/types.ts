@@ -1,9 +1,8 @@
-export type ProductDetailFragment = {
+export interface BasicProductFragment {
   id: string
   title: string
   handle: string
   description: string
-  tags: string[]
   priceRange: {
     minVariantPrice: {
       amount: string
@@ -19,7 +18,22 @@ export type ProductDetailFragment = {
   }
 }
 
-export type Product = {
+export interface DetailedProductFragment extends BasicProductFragment {
+  variants: {
+    edges: {
+      node: {
+        id: string
+        title: string
+        price: {
+          amount: string
+          currencyCode: string
+        }
+      }
+    }[]
+  }
+}
+
+export interface BasicProduct {
   id: string
   title: string
   handle: string
@@ -27,6 +41,15 @@ export type Product = {
   price: number
   imageSrc: string
   altText: string
+}
+
+export interface DetailedProduct extends BasicProduct {
+  variants: {
+    id: string
+    title: string
+    price: number
+    currencyCode: string
+  }[]
 }
 
 export type CartCostFragment = {
