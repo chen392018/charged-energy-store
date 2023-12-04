@@ -32,7 +32,7 @@ export default function Navbar() {
 
         <div>
           {/* <button className="p-2 border border-accent-600 rounded cart-icon"> */}
-          <ShoppingCartIcon className="w-10 h-10 border border-accent-600 rounded p-2 text-accent-300 glow-sm hover:text-secondary-200 hover:border-secondary-200" />
+          <ShoppingCartIcon className="w-10 h-10 border border-accent-600 rounded p-2 text-accent-300 glow-sm-hover hover:text-secondary-200 hover:border-secondary-200" />
           {/* </button> */}
         </div>
       </div>

@@ -10,7 +10,7 @@ export default function HeroSection() {
         <div className="py-8">
           <a
             href="/products"
-            className="rounded p-2 border border-accent-300 cursor-pointer glow-sm"
+            className="rounded p-2 border border-accent-300 cursor-pointer glow-sm-hover"
           >
             Take Charge
           </a>
