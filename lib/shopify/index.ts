@@ -13,7 +13,6 @@ export const storefront = async (
 ): Promise<any> => {
   const url = process.env.NEXT_PUBLIC_STOREFRONT_API_URL || ""
   const apiKey = process.env.NEXT_PUBLIC_STOREFRONT_API_TOKEN || ""
-  console.log(variables)
   try {
     const response = await fetch(url, {
       method: "POST",
@@ -23,10 +22,19 @@ export const storefront = async (
       },
       body: JSON.stringify({ query, variables }),
     })
-    console.log(response.status)
-    return response.json()
+    const payload = await response.json()
+
+    // Catch and throw any errors that are returned from the server
+    if (payload.errors) {
+      console.error(payload.errors)
+      return { errors: payload.errors }
+    }
+
+    return payload.data
+    // Catch any error
   } catch (error) {
     console.error(error)
+    return { errors: [error] }
   }
 }
 

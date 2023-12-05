@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Roboto_Mono } from "next/font/google"
 import "./globals.css"
 
+import { CartContextProvider } from "@/components/context/CartContext"
 import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
 
@@ -20,11 +21,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${font.className} bg-primary-700`}>
-        <Navbar />
-        <main className="flex min-h-screen flex-col items-center justify-between">
-          {children}
-        </main>
-        <Footer />
+        <CartContextProvider>
+          <Navbar />
+          <main className="flex min-h-screen flex-col items-center justify-between">
+            {children}
+          </main>
+          <Footer />
+        </CartContextProvider>
       </body>
     </html>
   )

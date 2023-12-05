@@ -4,15 +4,13 @@ import { XCircleIcon, PlusIcon, MinusIcon } from "@heroicons/react/24/outline"
 import { useState, useEffect, useRef } from "react"
 import {
   storefront,
-  createCart,
-  getCartByID,
   cartCostFragmentParser,
   lineItemFragmentParser,
   addToCart,
   removeFromCart,
 } from "@/lib/shopify"
+import { useCart } from "@/components/context/CartContext"
 
-import type { Cart } from "@/lib/shopify/types"
 import { updateCartItem } from "@/lib/shopify/mutations"
 
 const gql = String.raw
@@ -43,9 +41,9 @@ const variantsQuery = gql`
 `
 
 const getVariants = async () => {
-  const { data } = await storefront(variantsQuery)
+  const { products } = await storefront(variantsQuery)
   let variants: any[] = []
-  data.products.edges.forEach((product: any) => {
+  products.edges.forEach((product: any) => {
     const productTitle = product.node.title
     const newVars = product.node.variants.edges.map((newVar: any) => ({
       id: newVar.node.id,
@@ -61,84 +59,39 @@ const getVariants = async () => {
 
 export default function TestCart() {
   const initiated = useRef<boolean>(false)
-  const [cart, setCart] = useState<Cart | null>(null)
+  const { cart, setCart, handleCreateCart } = useCart()
 
   // Only for development purposes, does not need to be recreated
   const [variants, setVariants] = useState<any[]>([])
   const [selectedVariantID, setSelectedVariantID] = useState<string>("")
 
   useEffect(() => {
-    const getCart = async () => {
-      // Read local storage for the cart data
-      let localStorageResult = window.localStorage.getItem(
-        "charge:shopify:cart",
-      )
-
-      // Check if the cart exists in local storage
-      if (localStorageResult) {
-        await handleCartFromStorage(localStorageResult)
-
-        // Otherwise, if the cart isn't already in local storage
-      } else {
-        // Create the cart on Shopifys backend
-        await handleCreateCart()
-      }
-    }
-
     if (!initiated.current) {
       initiated.current = true
-      getCart()
+
+      // Just for drop down menu in development
       getVariants().then((vars) => setVariants(vars))
     }
   }, [])
 
-  const handleCartFromStorage = async (stringCart: string) => {
-    let localCartData = JSON.parse(stringCart)
-    // Fetch the contents of the cart from shopify
-    const { data } = await storefront(getCartByID, {
-      cartId: localCartData.id,
-    })
-
-    // Save the cart to state
-    setCart({
-      ...localCartData,
-      cost: cartCostFragmentParser(data.cart.cost),
-      lines: lineItemFragmentParser(data.cart.lines.edges),
-    })
-  }
-
-  const handleCreateCart = async () => {
-    const { data } = await storefront(createCart)
-    let localCartData = data.cartCreate.cart
-
-    // Save the cart to state
-    setCart({
-      ...localCartData,
-      cost: 0,
-      lines: [],
-    })
-
-    // Save the cart to local storage to persist across page refreshes
-    window.localStorage.setItem(
-      "charge:shopify:cart",
-      JSON.stringify(localCartData),
-    )
-  }
   const handleAddToCart = async () => {
     // Ensure the cart exists
     if (!cart || !selectedVariantID) return
 
     // Add a product variant to the cart
-    const { data } = await storefront(addToCart, {
+    const { cartLinesAdd, errors } = await storefront(addToCart, {
       cartId: cart?.id,
       variantId: selectedVariantID,
     })
+    if (errors) {
+      throw errors
+    }
 
     // Save the cart to state
     setCart({
       ...cart,
-      cost: cartCostFragmentParser(data.cartLinesAdd.cart.cost),
-      lines: lineItemFragmentParser(data.cartLinesAdd.cart.lines.edges),
+      cost: cartCostFragmentParser(cartLinesAdd.cart.cost),
+      lines: lineItemFragmentParser(cartLinesAdd.cart.lines.edges),
     })
   }
 
@@ -152,14 +105,17 @@ export default function TestCart() {
     // Ensure that the cart exists before trying to remove an item
     if (!cart) return
 
-    const { data } = await storefront(removeFromCart, {
+    const { cartLinesRemove, errors } = await storefront(removeFromCart, {
       cartId: cart?.id,
       lineId: lineID,
     })
+    if (errors) {
+      throw errors
+    }
     setCart({
       ...cart,
-      cost: cartCostFragmentParser(data.cartLinesRemove.cart.cost),
-      lines: lineItemFragmentParser(data.cartLinesRemove.cart.lines.edges),
+      cost: cartCostFragmentParser(cartLinesRemove.cart.cost),
+      lines: lineItemFragmentParser(cartLinesRemove.cart.lines.edges),
     })
   }
 
@@ -167,20 +123,18 @@ export default function TestCart() {
     // Ensure that the cart exists before trying to update an item
     if (!cart) return
 
-    const { data, errors } = await storefront(updateCartItem, {
+    const { cartLinesUpdate, errors } = await storefront(updateCartItem, {
       cartId: cart?.id,
       lineId: lineID,
       quantity: quantity,
     })
     if (errors) {
-      console.error(errors)
-      return
+      throw errors
     }
-    console.log(data)
     setCart({
       ...cart,
-      cost: cartCostFragmentParser(data.cartLinesUpdate.cart.cost),
-      lines: lineItemFragmentParser(data.cartLinesUpdate.cart.lines.edges),
+      cost: cartCostFragmentParser(cartLinesUpdate.cart.cost),
+      lines: lineItemFragmentParser(cartLinesUpdate.cart.lines.edges),
     })
   }
 

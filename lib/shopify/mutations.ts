@@ -2,15 +2,17 @@ import { cartFragment } from "./fragments"
 
 const gql = String.raw
 
+// Create a cart for the user
 export const createCart = gql`
   mutation createCart {
     cartCreate {
       cart {
-        checkoutUrl
-        id
+        ...cart
       }
     }
   }
+
+  ${cartFragment}
 `
 
 export const addToCart = gql`
