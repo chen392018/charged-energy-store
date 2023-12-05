@@ -1,5 +1,5 @@
 import Image from "next/image"
-import Review from "./Review"
+import Review from "./[handle]/Review"
 
 import type { BasicProduct } from "@/lib/shopify/types"
 

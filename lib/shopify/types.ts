@@ -43,13 +43,15 @@ export interface BasicProduct {
   altText: string
 }
 
+export interface ProductVariant {
+  id: string
+  title: string
+  price: number
+  currencyCode: string
+}
+
 export interface DetailedProduct extends BasicProduct {
-  variants: {
-    id: string
-    title: string
-    price: number
-    currencyCode: string
-  }[]
+  variants: ProductVariant[]
 }
 
 export type CartCostFragment = {

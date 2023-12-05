@@ -7,8 +7,7 @@ import {
   detailedProductFragmentParser,
 } from "@/lib/shopify"
 import type { BasicProduct, DetailedProduct } from "@/lib/shopify/types"
-import Review from "@/components/products/Review"
-import SelectPack from "@/components/products/SelectPack"
+import ProductDetails from "@/components/products/[handle]/ProductDetails"
 
 export default function ProductPage({
   params: { handle },
@@ -40,24 +39,7 @@ const fetchProduct = async (handle: string): Promise<DetailedProduct> => {
 
 async function ProductDescription({ handle }: { handle: string }) {
   const product = await fetchProduct(handle)
-  return (
-    <div className="flex flex-col gap-12">
-      <div className="space-y-2">
-        <h1 className="font-bold tracking-tight text-accent-100 text-4xl md:text-5xl ">
-          {product.title}
-        </h1>
-        <p className="font-semibold text-accent-600 text-base md:text-lg">
-          ${product.price}
-        </p>
-        <Review rate={5} />
-      </div>
-      <p className="text-accent-600 text-lg md:text-xl">
-        {product.description}
-      </p>
-      <SelectPack />
-      <button className="action-btn-style">Add to Cart</button>
-    </div>
-  )
+  return <ProductDetails product={product} />
 }
 
 async function ProductImage({ handle }: { handle: string }) {
@@ -66,8 +48,8 @@ async function ProductImage({ handle }: { handle: string }) {
     <Image
       src={product.imageSrc}
       alt={product.altText}
-      width={250}
-      height={250}
+      width={600}
+      height={600}
       className="w-full rounded"
     />
   )
