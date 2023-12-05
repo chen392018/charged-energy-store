@@ -7,6 +7,8 @@ import {
   detailedProductFragmentParser,
 } from "@/lib/shopify"
 import type { BasicProduct, DetailedProduct } from "@/lib/shopify/types"
+import Review from "@/components/products/Review"
+import SelectPack from "@/components/products/SelectPack"
 
 export default function ProductPage({
   params: { handle },
@@ -14,16 +16,16 @@ export default function ProductPage({
   params: { handle: string }
 }) {
   return (
-    <section className="w-full flex gap-4 divide-x divide-primary-500 items-center max-w-[1440px]">
-      <div className="w-1/2 px-8">
+    <section className="w-full flex flex-col max-w-[1440px] md:flex-row">
+      <div className="p-8 md:w-1/2">
         <Suspense>
-          <ProductDescription handle={handle} />
+          <ProductImage handle={handle} />
         </Suspense>
       </div>
 
-      <div className="w-1/2 px-16 h-full">
+      <div className="p-8 md:w-1/2">
         <Suspense>
-          <ProductImage handle={handle} />
+          <ProductDescription handle={handle} />
         </Suspense>
       </div>
     </section>
@@ -39,15 +41,21 @@ const fetchProduct = async (handle: string): Promise<BasicProduct> => {
 async function ProductDescription({ handle }: { handle: string }) {
   const product = await fetchProduct(handle)
   return (
-    <div className="flex flex-col gap-2">
-      <h1 className="text-2xl font-bold tracking-tight text-accent-900 mb-8 ">
-        {product.title}
-      </h1>
-      <p>{product.description}</p>
-      <p className="font-bold mb-4">${product.price}</p>
-      <button className="w-fit rounded-md bg-primary-500 px-3.5 py-2.5 text-sm font-semibold text-accent-100 shadow-sm hover:bg-primary-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600">
-        Add to Cart
-      </button>
+    <div className="flex flex-col gap-12">
+      <div className="space-y-2">
+        <h1 className="font-bold tracking-tight text-accent-100 text-4xl md:text-5xl ">
+          {product.title}
+        </h1>
+        <p className="font-semibold text-accent-600 text-base md:text-lg">
+          ${product.price}
+        </p>
+        <Review rate={5} />
+      </div>
+      <p className="text-accent-600 text-lg md:text-xl">
+        {product.description}
+      </p>
+      <SelectPack />
+      <button className="action-btn-style">Add to Cart</button>
     </div>
   )
 }
@@ -60,7 +68,7 @@ async function ProductImage({ handle }: { handle: string }) {
       alt={product.altText}
       width={250}
       height={250}
-      className="mx-auto"
+      className="w-full rounded"
     />
   )
 }

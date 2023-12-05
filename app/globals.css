@@ -62,8 +62,15 @@
   }
 } */
 
+/* Scrollbar style */
+.scrollbar-style{
+  @apply scrollbar-thin scrollbar-thumb-secondary-400 scrollbar-thumb-rounded scrollbar-corner-rounded scrollbar-track-rounded hover:scrollbar-thumb-secondary-600
+}
 
-
+/* btn style action buttons */
+.action-btn-style{
+  @apply relative p-4 rounded-sm uppercase border border-secondary-400 font-bold text-accent-200 text-sm sm:text-lg outline-none duration-200 after:bg-blend-overlay after:ease-in-out after:duration-500 hover:after:w-full after:-z-10 after:absolute after:top-0 after:left-0 after:h-full after:w-0 after:bg-secondary-400
+}
 
 .hero-image {
   background-image: url(/hero-background.png);
