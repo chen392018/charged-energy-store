@@ -1,7 +1,7 @@
 "use client"
 import Image from "next/image"
 import Link from "next/link"
-import { ShoppingCartIcon } from "@heroicons/react/24/outline"
+import { BsCart } from "react-icons/bs"
 
 import logo from "@/public/charge-logo.png"
 import { useState } from "react"
@@ -34,14 +34,16 @@ export default function Navbar() {
           </Link>
         </div>
 
-        <div>
-          {/* <button className="p-2 border border-accent-600 rounded cart-icon"> */}
-          <ShoppingCartIcon
+        <button className="relative rounded text-accent-300 glow-sm-hover duration-200 hover:text-secondary-200">
+          <BsCart
             onClick={() => setShowCart(!showCart)}
-            className="w-10 h-10 border border-accent-600 rounded p-2 text-accent-300 glow-sm-hover hover:text-secondary-200 hover:border-secondary-200"
+            className="p-2 w-12 h-12"
           />
-          {/* </button> */}
-        </div>
+          {/* TODO: Counter */}
+          {/* <span className="absolute top-0 left-0 p-2 font-bold flex items-center justify-center text-primary-100 text-xs w-full h-full">
+            2
+          </span> */}
+        </button>
       </div>
 
       {/* Cart Modal */}
