@@ -1,12 +1,10 @@
-export default function Review({ scale }: { scale: number }) {
+export default function Review({ rate }: { rate: number }) {
   const startNo = 5
 
   const stars = Array.from({ length: startNo }, (_, i) => (
     <svg
       key={`star_${i}`}
-      className={`${
-        i + 1 <= scale ? "fill-secondary-500" : "fill-transparent"
-      }`}
+      className={`${i + 1 <= rate ? "fill-secondary-500" : "fill-transparent"}`}
       width="20px"
       height="20px"
       viewBox="0 0 32 32"
@@ -47,7 +45,7 @@ export default function Review({ scale }: { scale: number }) {
     </svg>
   ))
   return (
-    <div className="flex justify-between">
+    <div className="flex gap-3 items-center">
       <div className="flex">{stars}</div>
       <p className="text-sm text-secondary-600 sm:text-base">2 reviews</p>
     </div>

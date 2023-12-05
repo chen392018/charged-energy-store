@@ -24,13 +24,12 @@ export default function ProductCard({ product }: { product: ParsedProduct }) {
               </a>
             </h3>
           </div>
-          <p className="text-sm font-medium text-accent-100 space-x-1 sm:text-base">
-            <span>$</span>
-            <span>{product.price}</span>
+          <p className="text-sm font-medium text-accent-100 sm:text-base">
+            ${product.price}
           </p>
         </div>
         <p className="text-sm text-secondary-600">Available</p>
-        <Review scale={5} />
+        <Review rate={5} />
       </div>
     </div>
   )
