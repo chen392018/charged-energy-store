@@ -4,8 +4,12 @@ import Link from "next/link"
 import { ShoppingCartIcon } from "@heroicons/react/24/outline"
 
 import logo from "@/public/charge-logo.png"
+import { useState } from "react"
+import CartModal from "../products/CartModal"
 
 export default function Navbar() {
+  const [showCart, setShowCart] = useState(false)
+
   return (
     <nav className="bg-primary-700 navbar-shadow-bottom relative top-0 right-0 left-0 z-[1000]">
       <div className="flex justify-between items-center px-8 py-4 max-w-[1440px] mx-auto">
@@ -32,10 +36,16 @@ export default function Navbar() {
 
         <div>
           {/* <button className="p-2 border border-accent-600 rounded cart-icon"> */}
-          <ShoppingCartIcon className="w-10 h-10 border border-accent-600 rounded p-2 text-accent-300 glow-sm-hover hover:text-secondary-200 hover:border-secondary-200" />
+          <ShoppingCartIcon
+            onClick={() => setShowCart(!showCart)}
+            className="w-10 h-10 border border-accent-600 rounded p-2 text-accent-300 glow-sm-hover hover:text-secondary-200 hover:border-secondary-200"
+          />
           {/* </button> */}
         </div>
       </div>
+
+      {/* Cart Modal */}
+      <CartModal showCart={showCart} setShowCart={setShowCart} />
     </nav>
   )
 }

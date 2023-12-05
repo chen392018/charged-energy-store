@@ -59,9 +59,7 @@ async function ProductDescription({ handle }: { handle: string }) {
         {product.description}
       </p>
       <SelectPack />
-      <button className="relative p-4 rounded-sm border border-secondary-400 font-bold text-accent-200 text-sm sm:text-lg outline-none duration-200 after:bg-blend-overlay after:ease-in-out after:duration-500 hover:after:w-full after:-z-10 after:absolute after:top-0 after:left-0 after:h-full after:w-0 after:bg-secondary-400">
-        Add to Cart
-      </button>
+      <button className="action-btn-style">Add to Cart</button>
     </div>
   )
 }

@@ -6,7 +6,7 @@ export default function SelectPack() {
   const [selected, setSelected] = useState(0)
   return (
     <div className="space-y-4">
-      <h2 className="text-accent-100 text-xl font-bold uppercase">
+      <h2 className="text-accent-200 text-xl font-bold uppercase">
         Select pack:
       </h2>
       <ul className="flex flex-wrap gap-4">

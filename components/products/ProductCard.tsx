@@ -4,7 +4,7 @@ import Review from "./Review"
 
 export default function ProductCard({ product }: { product: ParsedProduct }) {
   return (
-    <div className="group relative duration-500 shadow-[0px_0px_10px_5px] hover:shadow-accent-900 overflow-hidden rounded-md">
+    <div className="group relative duration-200 shadow-sm shadow-secondary-600 hover:shadow-md hover:shadow-secondary-600 overflow-hidden rounded-md">
       <div className="w-full bg-gray-200">
         <Image
           src={product.imageSrc}

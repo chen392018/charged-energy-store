@@ -91,6 +91,7 @@ const config: Config = {
   plugins: [
     require("@tailwindcss/aspect-ratio"),
     require("@tailwindcss/typography"),
+    require("tailwind-scrollbar")({ nocompatible: true }),
   ],
 }
 export default config
