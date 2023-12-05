@@ -32,10 +32,10 @@ export default function ProductPage({
   )
 }
 
-const fetchProduct = async (handle: string): Promise<BasicProduct> => {
-  const { data } = await storefront(getProductByHandle, { handle })
-  const product: DetailedProduct = detailedProductFragmentParser(data.product)
-  return product
+const fetchProduct = async (handle: string): Promise<DetailedProduct> => {
+  const { product } = await storefront(getProductByHandle, { handle })
+  const parsedProduct: DetailedProduct = detailedProductFragmentParser(product)
+  return parsedProduct
 }
 
 async function ProductDescription({ handle }: { handle: string }) {

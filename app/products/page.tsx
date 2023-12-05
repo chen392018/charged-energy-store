@@ -15,11 +15,6 @@ export default function ProductsPage() {
   return (
     <div id="container" className="w-full max-w-[1440px] px-8">
       <div className="flex flex-col md:flex-row rounded-lg overflow-hidden">
-        {/* Left Drawer */}
-        {/* <section className="w-full md:w-1/5 md:min-h-screen bg-background-400">
-          <FiltersBar />
-        </section> */}
-
         {/* Product Catalogue */}
         <section className="w-full min-h-screen bg-background-500">
           <Suspense>
@@ -32,13 +27,12 @@ export default function ProductsPage() {
 }
 
 async function ProductCatalogWrapper() {
-  const { data } = await storefront(getProductsQuery)
-  console.log(data.products.edges)
-  const products: BasicProduct[] = data.products.edges.map(
+  const { products } = await storefront(getProductsQuery)
+  const productList: BasicProduct[] = products.edges.map(
     ({ node }: { node: any }) => {
       return basicProductFragmentParser(node)
     },
   )
 
-  return <ProductCatalog products={products} />
+  return <ProductCatalog products={productList} />
 }

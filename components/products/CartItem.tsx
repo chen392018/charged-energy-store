@@ -2,11 +2,17 @@
 import { HiMinus } from "react-icons/hi2"
 import { MdAdd, MdClose, MdDelete } from "react-icons/md"
 import Image from "next/image"
+
+// TODO Make Dynamic Product Image
 import product from "@/public/promo-shot.png"
+
 import { useState } from "react"
 
-export default function CartItem() {
-  const [quantity, setQuantity] = useState(0)
+import type { LineItem } from "@/lib/shopify/types"
+import { useCart } from "../context/CartContext"
+
+export default function CartItem({ lineItem }: { lineItem: LineItem }) {
+  const { handleUpdateItem, handleRemoveItem } = useCart()
   return (
     <div className="flex justify-between py-6">
       <div className="flex gap-8">
@@ -15,19 +21,29 @@ export default function CartItem() {
         </div>
         <div className="flex flex-col justify-between">
           <p className="truncate font-bold text-accent-100 text-xl md:text-2xl">
-            Dawn
+            {lineItem.product}
           </p>
-          <p className="truncate text-lg md:text-xl">Pack: 8</p>
+          <p className="truncate text-lg md:text-xl">{lineItem.title}</p>
 
           {/* Quantity */}
           <div className="flex items-center gap-6 border border-secondary-400 px-4 py-2">
-            <button onClick={() => setQuantity(quantity - 1)}>
+            <button
+              onClick={() =>
+                handleUpdateItem(lineItem.id, lineItem.quantity - 1)
+              }
+            >
               <HiMinus className="w-6 h-6" />
             </button>
 
-            <span className="font-bold text-base md:text-lg">{quantity}</span>
+            <span className="font-bold text-base md:text-lg">
+              {lineItem.quantity}
+            </span>
 
-            <button onClick={() => setQuantity(quantity + 1)}>
+            <button
+              onClick={() =>
+                handleUpdateItem(lineItem.id, lineItem.quantity + 1)
+              }
+            >
               <MdAdd className="w-6 h-6" />
             </button>
           </div>
@@ -36,9 +52,14 @@ export default function CartItem() {
       <div className="flex flex-col justify-between">
         {/* Delete cart item */}
         <button>
-          <MdDelete className="w-8 h-8 duration-300 hover:text-red-400" />
+          <MdDelete
+            className="w-8 h-8 duration-300 hover:text-red-400"
+            onClick={() => handleRemoveItem(lineItem.id)}
+          />
         </button>
-        <p className="text-lg md:text-xl">$9.99</p>
+        <p className="text-lg md:text-xl">
+          ${lineItem.price * lineItem.quantity} {lineItem.currencyCode}
+        </p>
       </div>
     </div>
   )

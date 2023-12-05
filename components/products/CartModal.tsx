@@ -1,6 +1,9 @@
+"use client"
 import { MdClose } from "react-icons/md"
 import CartItem from "./CartItem"
 import { Dispatch, SetStateAction } from "react"
+
+import { useCart } from "../context/CartContext"
 
 export default function CartModal({
   showCart,
@@ -9,6 +12,7 @@ export default function CartModal({
   showCart: boolean
   setShowCart: Dispatch<SetStateAction<boolean>>
 }) {
+  const { cart } = useCart()
   const cartItems = [1, 2, 3, 4]
   return (
     <div
@@ -23,14 +27,14 @@ export default function CartModal({
         {/* cart items */}
         <div className="overflow-auto scrollbar-style">
           <ul className="max-h-[500px] px-4">
-            {cartItems.map((item, index) => (
+            {cart?.lines.map((lineItem, index) => (
               <li
-                key={item}
+                key={lineItem.id}
                 className={`${
                   index !== cartItems.length - 1 && "border-b"
                 } border-secondary-700`}
               >
-                <CartItem />
+                <CartItem lineItem={lineItem} />
               </li>
             ))}
           </ul>
@@ -39,7 +43,9 @@ export default function CartModal({
         <div className="py-4 border-t border-secondary-400 text-base md:text-lg">
           <p className="flex justify-between">
             <span className="uppercase">Subtotal</span>
-            <span>$9.99</span>
+            <span>
+              ${cart?.cost.amount} {cart?.cost.currencyCode}
+            </span>
           </p>
 
           <p className="flex justify-between uppercase">
