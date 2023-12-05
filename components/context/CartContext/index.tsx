@@ -3,8 +3,11 @@ import { createContext, useContext, useEffect, useState, useRef } from "react"
 
 import {
   // Queries and Mutations
+  addToCart,
   createCart,
   getCartByID,
+  removeFromCart,
+  updateCartItem,
 
   // Storefront client
   storefront,
@@ -86,12 +89,101 @@ function CartContextProvider({ children }: { children: React.ReactNode }) {
       JSON.stringify(localCartData),
     )
   }
+
+  const handleEmptyCart = async () => {
+    window.localStorage.removeItem("charge:shopify:cart")
+    setCart(null)
+    await handleCreateCart()
+  }
+
+  const handleAddToCart = async (variantID: string) => {
+    // Ensure the cart exists
+    if (!cart) {
+      throw new Error("Cart does not exist")
+    }
+
+    if (!variantID) {
+      throw new Error("Variant ID is required. Received: " + variantID)
+    }
+
+    // Add a product variant to the cart
+    const { cartLinesAdd, errors } = await storefront(addToCart, {
+      cartId: cart?.id,
+      variantId: variantID,
+    })
+    if (errors) {
+      throw errors
+    }
+
+    // Save the cart to state
+    setCart({
+      ...cart,
+      cost: cartCostFragmentParser(cartLinesAdd.cart.cost),
+      lines: lineItemFragmentParser(cartLinesAdd.cart.lines.edges),
+    })
+  }
+
+  const handleRemoveItem = async (lineID: string) => {
+    // Ensure that the cart exists before trying to remove an item
+    if (!cart) {
+      throw new Error("Cart does not exist")
+    }
+
+    if (!lineID) {
+      throw new Error("Line ID is required. Received: " + lineID)
+    }
+
+    const { cartLinesRemove, errors } = await storefront(removeFromCart, {
+      cartId: cart?.id,
+      lineId: lineID,
+    })
+    if (errors) {
+      throw errors
+    }
+    setCart({
+      ...cart,
+      cost: cartCostFragmentParser(cartLinesRemove.cart.cost),
+      lines: lineItemFragmentParser(cartLinesRemove.cart.lines.edges),
+    })
+  }
+
+  const handleUpdateItem = async (lineID: string, quantity: number) => {
+    // Ensure that the cart exists before trying to update an item
+    if (!cart) {
+      throw new Error("Cart does not exist")
+    }
+
+    if (!lineID) {
+      throw new Error("Line ID is required. Received: " + lineID)
+    }
+
+    if (typeof quantity !== "number") {
+      throw new Error("Quantity must be a number. Received: " + quantity)
+    }
+
+    const { cartLinesUpdate, errors } = await storefront(updateCartItem, {
+      cartId: cart?.id,
+      lineId: lineID,
+      quantity: quantity,
+    })
+    if (errors) {
+      throw errors
+    }
+    setCart({
+      ...cart,
+      cost: cartCostFragmentParser(cartLinesUpdate.cart.cost),
+      lines: lineItemFragmentParser(cartLinesUpdate.cart.lines.edges),
+    })
+  }
+
   return (
     <CartContext.Provider
       value={{
         cart,
-        setCart,
-        handleCreateCart,
+        handleEmptyCart,
+        handleAddToCart,
+        handleRemoveItem,
+        handleUpdateItem,
       }}
     >
       {children}

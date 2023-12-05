@@ -72,6 +72,7 @@ export const lineItemFragment = gql`
 
 export const cartFragment = gql`
   fragment cart on Cart {
+    id
     checkoutUrl
     cost {
       ...cost

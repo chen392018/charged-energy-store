@@ -11,8 +11,6 @@ import {
 } from "@/lib/shopify"
 import { useCart } from "@/components/context/CartContext"
 
-import { updateCartItem } from "@/lib/shopify/mutations"
-
 const gql = String.raw
 
 const variantsQuery = gql`
@@ -59,7 +57,13 @@ const getVariants = async () => {
 
 export default function TestCart() {
   const initiated = useRef<boolean>(false)
-  const { cart, setCart, handleCreateCart } = useCart()
+  const {
+    cart,
+    handleAddToCart,
+    handleEmptyCart,
+    handleRemoveItem,
+    handleUpdateItem,
+  } = useCart()
 
   // Only for development purposes, does not need to be recreated
   const [variants, setVariants] = useState<any[]>([])
@@ -73,70 +77,6 @@ export default function TestCart() {
       getVariants().then((vars) => setVariants(vars))
     }
   }, [])
-
-  const handleAddToCart = async () => {
-    // Ensure the cart exists
-    if (!cart || !selectedVariantID) return
-
-    // Add a product variant to the cart
-    const { cartLinesAdd, errors } = await storefront(addToCart, {
-      cartId: cart?.id,
-      variantId: selectedVariantID,
-    })
-    if (errors) {
-      throw errors
-    }
-
-    // Save the cart to state
-    setCart({
-      ...cart,
-      cost: cartCostFragmentParser(cartLinesAdd.cart.cost),
-      lines: lineItemFragmentParser(cartLinesAdd.cart.lines.edges),
-    })
-  }
-
-  const handleEmptyCart = async () => {
-    window.localStorage.removeItem("charge:shopify:cart")
-    setCart(null)
-    await handleCreateCart()
-  }
-
-  const handleRemoveItem = async (lineID: string) => {
-    // Ensure that the cart exists before trying to remove an item
-    if (!cart) return
-
-    const { cartLinesRemove, errors } = await storefront(removeFromCart, {
-      cartId: cart?.id,
-      lineId: lineID,
-    })
-    if (errors) {
-      throw errors
-    }
-    setCart({
-      ...cart,
-      cost: cartCostFragmentParser(cartLinesRemove.cart.cost),
-      lines: lineItemFragmentParser(cartLinesRemove.cart.lines.edges),
-    })
-  }
-
-  const handleUpdateItem = async (lineID: string, quantity: number) => {
-    // Ensure that the cart exists before trying to update an item
-    if (!cart) return
-
-    const { cartLinesUpdate, errors } = await storefront(updateCartItem, {
-      cartId: cart?.id,
-      lineId: lineID,
-      quantity: quantity,
-    })
-    if (errors) {
-      throw errors
-    }
-    setCart({
-      ...cart,
-      cost: cartCostFragmentParser(cartLinesUpdate.cart.cost),
-      lines: lineItemFragmentParser(cartLinesUpdate.cart.lines.edges),
-    })
-  }
 
   return (
     <div className="text-accent-300 flex flex-col mx-auto items-center gap-8">
@@ -158,7 +98,7 @@ export default function TestCart() {
         </button>
         <button
           className="p-2 bg-secondary-300 text-primary-700 rounded border"
-          onClick={handleAddToCart}
+          onClick={() => handleAddToCart(selectedVariantID)}
         >
           Add Item
         </button>
