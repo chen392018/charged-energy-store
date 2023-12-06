@@ -10,6 +10,8 @@ import CartModal from "../products/CartModal"
 export default function Navbar() {
   const [showCart, setShowCart] = useState(false)
 
+  const totalCartItems = 10
+
   return (
     <nav className="bg-primary-700 navbar-shadow-bottom relative top-0 right-0 left-0 z-50">
       <div className="flex justify-between items-center px-8 py-4 max-w-[1440px] mx-auto">
@@ -34,15 +36,15 @@ export default function Navbar() {
           </Link>
         </div>
 
-        <button className="relative rounded text-accent-300 glow-sm-hover duration-200 hover:text-secondary-200">
+        <button className="relative rounded text-accent-300 glow-sm-hover group duration-200 hover:text-secondary-200">
           <BsCart
             onClick={() => setShowCart(!showCart)}
-            className="p-2 w-12 h-12"
+            className="p-2 w-14 h-14 sm:w-16 sm:h-16"
           />
           {/* TODO: Counter */}
-          {/* <span className="absolute top-0 left-0 p-2 font-bold flex items-center justify-center text-primary-100 text-xs w-full h-full">
-            2
-          </span> */}
+          <span className="absolute pointer-events-none -top-[1px] left-[1px] p-2 font-bold flex items-center justify-center text-primary-100 w-full h-full overflow-hidden text-xs md:text-sm duration-200 group-hover:text-secondary-200">
+            {totalCartItems}
+          </span>
         </button>
       </div>
 
