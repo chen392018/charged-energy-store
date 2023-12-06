@@ -8,7 +8,7 @@ import type { ParsedProduct } from "@/lib/shopify/types"
 
 export default function ProductsPage() {
   return (
-    <div id="container" className="w-full max-w-[1440px] px-8">
+    <div id="container" className="w-full max-w-[1440px]">
       <div className="flex flex-col md:flex-row rounded-lg overflow-hidden">
         {/* Left Drawer */}
         {/* <section className="w-full md:w-1/5 md:min-h-screen bg-background-400">

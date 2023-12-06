@@ -5,13 +5,13 @@ import Review from "./Review"
 export default function ProductCard({ product }: { product: ParsedProduct }) {
   return (
     <div className="bg-primary-600 group relative duration-500 shadow-2xl shadow-black hover:shadow hover:shadow-secondary-400 overflow-hidden rounded-md">
-      <div className="bg-gray-200 min-[400px]:w-[384px] min-[400px]:h-[400px] overflow-hidden">
+      <div className="relative bg-gray-200 overflow-hidden">
         <Image
           src={product.imageSrc}
           alt={product.imageAlt}
-          width={400}
-          height={400}
-          className="object-cover w-auto h-auto"
+          width={200}
+          height={200}
+          className="object-cover min-[400px]:w-[384px] min-[400px]:h-[400px] w-full h-full"
         />
       </div>
       <div className="p-5 space-y-6">

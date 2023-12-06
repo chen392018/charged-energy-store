@@ -1,7 +1,10 @@
+"use client"
+
 import { MdClose } from "react-icons/md"
 import CartItem from "./CartItem"
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useEffect, useRef } from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 export default function CartModal({
   showCart,
@@ -10,36 +13,47 @@ export default function CartModal({
   showCart: boolean
   setShowCart: Dispatch<SetStateAction<boolean>>
 }) {
+  const cartModalRef = useRef<HTMLDivElement>(null)
+  const modalOverlayRef = useRef<HTMLDivElement>(null)
+  const path = usePathname()
   const cartItems: number[] = []
 
-  // TODO: Close model when outside clicked
-  // const cartModalRef = useRef<HTMLDivElement | null>(null)
+  // Close modal wehn navigating between pages
+  useEffect(() => {
+    // only close modal when the modal is opened
+    if (!showCart) return
 
-  // useEffect(() => {
-  //   // only add the event listener when the modal is opened
-  //   // if (!showCart) return
-  //   console.log("show cart", showCart)
+    setShowCart(false)
+  }, [path])
 
-  //   function handleClick(event: MouseEvent) {
-  //     console.log(cartModalRef.current?.contains(event.target))
-  //     if (
-  //       cartModalRef.current &&
-  //       !cartModalRef.current.contains(event.target as Node)
-  //     ) {
-  //       setShowCart(!showCart)
-  //     }
-  //   }
-  //   window.addEventListener("click", handleClick)
-  //   // clean up
-  //   return () => window.removeEventListener("click", handleClick)
-  // }, [showCart, setShowCart])
+  useEffect(() => {
+    // only add the event listener when the modal is opened
+    if (!showCart) return
+
+    const modalOverlay = modalOverlayRef.current
+
+    function handleClick(event: MouseEvent) {
+      if (
+        cartModalRef.current &&
+        !cartModalRef.current.contains(event.target as Node)
+      ) {
+        setShowCart(!showCart)
+      }
+    }
+    modalOverlay?.addEventListener("click", handleClick)
+    // clean up
+    return () => modalOverlay?.removeEventListener("click", handleClick)
+  }, [showCart, setShowCart])
 
   return (
     <>
       {showCart && (
-        <div className="fixed top-0 left-0 flex items-center justify-center w-screen h-screen bg-black/70 px-8 z-50">
+        <div
+          ref={modalOverlayRef}
+          className="fixed top-0 left-0 flex items-center justify-center w-screen h-screen bg-black/70 px-8 z-50"
+        >
           <div
-            // ref={cartModalRef}
+            ref={cartModalRef}
             className="w-full max-w-4xl p-4 space-y-8 backdrop-blur-xl rounded border border-primary-200 text-primary-100"
           >
             <button
@@ -66,7 +80,11 @@ export default function CartModal({
               ) : (
                 <div className="flex flex-col items-center justify-center gap-8">
                   <p className="text-xl md:text-2xl">Your cart is empty!</p>
-                  <Link href="/products" className="action-btn-style">
+                  <Link
+                    onClick={() => setShowCart(false)}
+                    href="/products"
+                    className="action-btn-style"
+                  >
                     Continue Shopping
                   </Link>
                 </div>
