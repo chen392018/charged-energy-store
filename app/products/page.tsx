@@ -1,7 +1,6 @@
 import { Suspense } from "react"
 
 import ProductCatalog from "@/components/products/Catalog"
-import FiltersBar from "@/components/products/FiltersBar"
 
 import { storefront, getProducts as getProductsQuery } from "@/lib/shopify"
 
