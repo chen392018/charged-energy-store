@@ -9,14 +9,19 @@ import { usePathname } from "next/navigation"
 export default function CartModal({
   showCart,
   setShowCart,
+  totalCartItems,
 }: {
   showCart: boolean
   setShowCart: Dispatch<SetStateAction<boolean>>
+  totalCartItems: number
 }) {
   const cartModalRef = useRef<HTMLDivElement>(null)
   const modalOverlayRef = useRef<HTMLDivElement>(null)
   const path = usePathname()
-  const cartItems: number[] = []
+  const cartItems: number[] = Array.from(
+    new Array(totalCartItems),
+    (_, i) => i + 1,
+  )
 
   // Close modal wehn navigating between pages
   useEffect(() => {

@@ -49,7 +49,11 @@ export default function Navbar() {
       </div>
 
       {/* Cart Modal */}
-      <CartModal showCart={showCart} setShowCart={setShowCart} />
+      <CartModal
+        totalCartItems={totalCartItems}
+        showCart={showCart}
+        setShowCart={setShowCart}
+      />
     </nav>
   )
 }
