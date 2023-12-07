@@ -3,7 +3,7 @@ import { MdClose } from "react-icons/md"
 import CartItem from "./CartItem"
 import { Dispatch, SetStateAction, useEffect, useRef } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 
 import { useCart } from "../context/CartContext"
 import { formatPrice } from "@/lib/utils"
@@ -18,6 +18,7 @@ export default function CartModal({
   totalCartItems: number
 }) {
   const { cart } = useCart()
+  const router = useRouter()
   const cartModalRef = useRef<HTMLDivElement>(null)
   const modalOverlayRef = useRef<HTMLDivElement>(null)
   const path = usePathname()
@@ -113,6 +114,12 @@ export default function CartModal({
           <button
             disabled={cart?.lines.length === 0}
             className="action-btn-style w-full"
+            onClick={() => {
+              if (!cart?.checkoutUrl) {
+                throw new Error("Could not find Checkout URL!")
+              }
+              router.push(cart.checkoutUrl)
+            }}
           >
             Proceed to checkout
           </button>
