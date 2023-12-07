@@ -52,6 +52,10 @@
   --warning-700: #802a2a;
   --warning-800: #551c1c;
   --warning-900: #2b0e0e;
+
+  --dawn-background: #e0a031;
+  --noon-background: #f7de81;
+  --dusk-background: #e35b46;
 }
 
 /* @media (prefers-color-scheme: dark) {

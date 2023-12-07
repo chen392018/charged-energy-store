@@ -1,6 +1,7 @@
 import HeroSection from "@/components/landing/Hero"
 import Initiatives from "@/components/landing/Initiatives"
 import FeatureOne from "@/components/landing/FeatureOne"
+import FeatureSectionBackground from "@/components/landing/Background"
 
 import { storefront, getProductByHandle } from "@/lib/shopify/"
 
@@ -13,7 +14,7 @@ export default async function Home() {
       <section className="py-12 sm:py-24">
         <Initiatives />
       </section>
-      <section className="py-12 sm:py-24 w-full">
+      <FeatureSectionBackground>
         <div className="prose text-center mx-auto mb-12">
           <h1 className=" w-fit mx-auto text-4xl font-bold tracking-wider uppercase">
             Our Products
@@ -26,7 +27,7 @@ export default async function Home() {
         <FeatureOne handle="dawn" reversed={false} />
         <FeatureOne handle="noon" reversed={true} />
         <FeatureOne handle="dusk" reversed={false} />
-      </section>
+      </FeatureSectionBackground>
     </>
   )
 }

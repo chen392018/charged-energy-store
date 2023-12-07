@@ -7,10 +7,12 @@ import logo from "@/public/charge-logo.png"
 import { useState } from "react"
 import CartModal from "../products/CartModal"
 
+import { useCart } from "@/components/context/CartContext"
+
 export default function Navbar() {
   const [showCart, setShowCart] = useState(false)
 
-  const totalCartItems = 10
+  const { cart } = useCart()
 
   return (
     <nav className="bg-primary-700 navbar-shadow-bottom relative top-0 right-0 left-0 z-50">
@@ -43,14 +45,14 @@ export default function Navbar() {
           />
           {/* TODO: Counter */}
           <span className="absolute pointer-events-none -top-[1px] left-[1px] p-2 font-bold flex items-center justify-center text-primary-100 w-full h-full overflow-hidden text-xs md:text-sm duration-200 group-hover:text-secondary-200">
-            {totalCartItems}
+            {cart?.lines.length || 0}
           </span>
         </button>
       </div>
 
       {/* Cart Modal */}
       <CartModal
-        totalCartItems={totalCartItems}
+        totalCartItems={cart?.lines.length || 0}
         showCart={showCart}
         setShowCart={setShowCart}
       />

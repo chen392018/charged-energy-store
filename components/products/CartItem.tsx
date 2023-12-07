@@ -34,7 +34,6 @@ export default function CartItem({ lineItem }: { lineItem: LineItem }) {
             >
               <HiMinus className="w-4 h-4 md:w-6 md:h-6" />
             </button>
-            <p className="truncate text-sm md:text-base">{lineItem.title}</p>
             <span className="font-bold text-base md:text-lg">
               {lineItem.quantity}
             </span>
