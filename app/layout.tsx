@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${font.className} bg-primary-700`}>
+      <body className={`${font.className} bg-primary-700 overflow-y-auto`}>
         <CartContextProvider>
           <Navbar />
           <main className="flex min-h-screen flex-col items-center justify-between">

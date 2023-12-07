@@ -3,8 +3,6 @@ import Initiatives from "@/components/landing/Initiatives"
 import FeatureOne from "@/components/landing/FeatureOne"
 import FeatureSectionBackground from "@/components/landing/Background"
 
-import { storefront, getProductByHandle } from "@/lib/shopify/"
-
 export default async function Home() {
   return (
     <>
