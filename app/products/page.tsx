@@ -1,7 +1,6 @@
 import { Suspense } from "react"
 
 import ProductCatalog from "@/components/products/Catalog"
-import FiltersBar from "@/components/products/FiltersBar"
 
 import {
   storefront,
@@ -13,7 +12,7 @@ import type { BasicProduct } from "@/lib/shopify/types"
 
 export default function ProductsPage() {
   return (
-    <div id="container" className="w-full max-w-[1440px] px-8">
+    <div id="container" className="w-full max-w-[1440px]">
       <div className="flex flex-col md:flex-row rounded-lg overflow-hidden">
         {/* Product Catalogue */}
         <section className="w-full min-h-screen bg-background-500">

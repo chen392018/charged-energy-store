@@ -5,14 +5,14 @@ import type { BasicProduct } from "@/lib/shopify/types"
 
 export default function ProductCard({ product }: { product: BasicProduct }) {
   return (
-    <div className="group relative duration-200 shadow-sm shadow-secondary-600 hover:shadow-md hover:shadow-secondary-600 overflow-hidden rounded-md">
-      <div className="w-full bg-gray-200">
+    <div className="bg-primary-600 group relative duration-500 shadow-2xl shadow-black hover:shadow hover:shadow-secondary-400 overflow-hidden rounded-md">
+      <div className="relative bg-gray-200 overflow-hidden">
         <Image
           src={product.imageSrc}
           alt={product.altText}
-          width={600}
-          height={600}
-          className="object-cover w-[400px] h-[400px] aspect-1 duration-500 group-hover:scale-105"
+          width={200}
+          height={200}
+          className="object-cover min-[400px]:w-[384px] min-[400px]:h-[400px] w-full h-full"
         />
       </div>
       <div className="p-5 space-y-6">
