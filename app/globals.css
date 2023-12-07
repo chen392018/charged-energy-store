@@ -52,6 +52,10 @@
   --warning-700: #802a2a;
   --warning-800: #551c1c;
   --warning-900: #2b0e0e;
+
+  --dawn-background: #e0a031;
+  --noon-background: #f7de81;
+  --dusk-background: #e35b46;
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -62,8 +66,15 @@
   }
 } */
 
+/* Scrollbar style */
+.scrollbar-style{
+  @apply scrollbar-thin scrollbar-thumb-secondary-400 scrollbar-thumb-rounded scrollbar-corner-rounded scrollbar-track-rounded hover:scrollbar-thumb-secondary-600
+}
 
-
+/* btn style action buttons */
+.action-btn-style{
+  @apply relative p-4 rounded-sm uppercase border border-secondary-400 font-bold text-accent-200 text-sm sm:text-lg outline-none duration-200 disabled:border-secondary-700 disabled:pointer-events-none after:bg-blend-overlay after:ease-in-out after:duration-500 hover:after:w-full after:-z-10 after:absolute after:top-0 after:left-0 after:h-full after:w-0 after:bg-secondary-400
+}
 
 .hero-image {
   background-image: url(/hero-background.png);
