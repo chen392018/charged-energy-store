@@ -1,5 +1,6 @@
 import Image from "next/image"
 import promoShot from "@/public/promo-shot.png"
+import promoPacket from "@/public/promo-packet.jpeg"
 import BlogCard from "@/components/research/BlogCard"
 
 export default function ResearchPage() {
@@ -71,7 +72,7 @@ export default function ResearchPage() {
         </div>
         <div>
           <Image
-            src={promoShot}
+            src={promoPacket}
             width={400}
             height={400}
             alt="Charge Promo Shot"

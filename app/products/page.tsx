@@ -27,7 +27,7 @@ export default function ProductsPage() {
 
 async function ProductCatalogWrapper() {
   const { products } = await storefront(getProductsQuery)
-  const productList: BasicProduct[] = products.edges.map(
+  const productList: BasicProduct[] = products?.edges.map(
     ({ node }: { node: any }) => {
       return basicProductFragmentParser(node)
     },

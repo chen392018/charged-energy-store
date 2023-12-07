@@ -31,7 +31,7 @@ export const storefront = async (
 
     // Catch and throw any errors that are returned from the server
     if (payload.errors) {
-      console.error(payload.errors)
+      console.error("Storefront Request Error: ", payload.errors)
       return { errors: payload.errors }
     }
 

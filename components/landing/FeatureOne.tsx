@@ -28,7 +28,10 @@ export default function FeatureSection({
           <p className="text-primary-500 opacity-75">
             {productData[handle].description}
           </p>
-          <a className="prose rounded py-2 px-4 bg-primary-500 hover:bg-primary-300 cursor-pointer">
+          <a
+            className="prose rounded py-2 px-4 bg-primary-500 hover:bg-primary-300 cursor-pointer"
+            href={`/products`}
+          >
             Shop Now
           </a>
         </div>
